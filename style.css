@@ -155,6 +155,19 @@ body {
 .flower__leaf--3 {
   transform: translate(-90%, 0%) rotateY(45deg) rotateX(50deg);
 }
+
+
+
+@keyframes riseUp {
+  0% { transform: translateY(50px) scale(0.5); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes sway {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); }
+  50%  { transform: translateY(-3px) rotate(2deg) scale(1.02); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
 .flower__leaf--4 {
   width: 8vmin;
   height: 8vmin;
@@ -981,8 +994,527 @@ body {
     transform: scale(0);
   }
 }
-.not-loaded * {
+.not-loaded *:not(.question-box, .question-buttons) {
   animation-play-state: paused !important;
+}
+/* Message button (rounded square) */
+.msg-btn {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+
+  /* remove fixed size + allow design flexibility */
+  width: 64px;
+  height: 64px;
+
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+
+  /* GLASS STYLE */
+  background: linear-gradient(135deg,
+              rgba(255, 255, 255, 0.10),
+              rgba(255, 255, 255, 0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+
+  transition: transform .15s ease, opacity .15s ease;
+  z-index: 9999;
+}
+
+/* Hover + Active */
+.msg-btn:hover {
+  transform: translateY(-4px);
+}
+
+.msg-btn:active {
+  transform: translateY(0);
+  opacity: 0.9;
+}
+
+
+.msg-panel {
+  position: fixed;
+  right: 2rem;
+  bottom: calc(2rem + 84px);
+  width: 320px;
+  max-width: calc(100vw - 3.5rem);
+
+  /* GLASS STYLE */
+  background: linear-gradient(135deg,
+              rgba(255, 255, 255, 0.10),
+              rgba(255, 255, 255, 0));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+
+  overflow: hidden;
+
+  /* animation */
+  transform-origin: bottom right;
+  transform: translateY(8px) scale(.96);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .2s ease, opacity .2s ease;
+
+  z-index: 9998;
+}
+
+.msg-panel.show {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.msg-panel__header {
+  padding: 12px 14px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.msg-panel__body {
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #f1f1f1;
+}
+
+@media (max-width: 420px) {
+  .msg-btn {
+    right: 1rem;
+    bottom: 1rem;
+    width: 56px;
+    height: 56px;
+  }
+  
+  .msg-panel {
+    right: 1rem;
+    bottom: calc(1rem + 72px);
+    width: 88vw;
+  }
+}
+
+/* small responsive adjustment */
+@media (max-width: 420px) {
+  .msg-btn { right: 1rem; bottom: 1rem; width:56px; height:56px; }
+  .msg-panel { right: 1rem; bottom: calc(1rem + 72px); width: 88vw; }
+}
+
+/* Top Hello Box */
+.hello-box {
+  position: fixed;
+  top: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* AUTO-RESIZING BOX */
+  display: inline-flex;
+  padding: 14px 24px;        /* instead of fixed width/height */
+  max-width: 90vw;           /* keeps it responsive */
+  box-sizing: border-box;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: center;
+
+  /* GLASS STYLE */
+  background: linear-gradient(135deg,
+              rgba(255, 255, 255, 0.1),
+              rgba(255, 255, 255, 0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+
+  /* TEXT STYLE */
+  font-size: 18px;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: .5px;
+
+  z-index: 9999;
+}
+
+
+/* Hover effect (optional) */
+.hello-box {
+  opacity: 0;
+  animation: helloFade 0.5s ease forwards;
+}
+
+@keyframes helloFade {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+
+/* Glassy Question Box */
+.question-box {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  padding: 20px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255,255,255,0.45);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.25);
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  z-index: 9999;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.question-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.q-btn {
+  padding: 8px 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.6);
+  border: 1.4px solid rgba(255,255,255,0.45);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  transition: transform .12s ease, opacity .12s ease;
+}
+
+.question-box {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border:1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Yes button */
+.q-btn.yes {
+  background: rgba(0,255,120,0.5);
+}
+
+/* No button */
+.q-btn.no {
+  background: rgba(255,0,0,0.35);
+}
+
+.q-btn:hover {
+  transform: translateY(-3px);
+}
+
+.q-btn:active {
+  transform: translateY(0);
+}
+
+/* 🌹 RED ROSE PETAL COLOR OVERRIDE */
+.flower__leaf {
+    background-color: #ff4d6d !important;
+    background-image: linear-gradient(to top, #b3002d, #ff4d6d) !important;
+    box-shadow: inset 0 0 2vmin rgba(255, 200, 200, 0.6) !important;
+}
+
+/* Inner round petal glow (was blue) */
+.flower__leafs::after {
+    background-color: #ff003c !important;
+    filter: blur(8vmin) !important;
+}
+
+/* Top "white-circle" highlight → rose center */
+.flower__white-circle {
+    background-color: #ffccd5 !important;
+}
+
+.flower__white-circle::after {
+    background-image: linear-gradient(90deg, #ff758f, #ff4d6d) !important;
+}
+
+/* 🌹 LIGHT PARTICLES (change blue → rose red) */
+.flower__light {
+    background-color: #ff4d6d !important;
+}
+
+.flower__light:nth-child(odd) {
+    background-color: #ff99aa !important;
+}
+
+/* 🌹 Rose Stem (optional darker green) */
+.flower__line {
+    background-image: linear-gradient(to top, transparent 10%, #0d4f1f, #2f9e44) !important;
+}
+
+.flower__line__leaf {
+    background-image: linear-gradient(to top, rgba(20, 117, 122, 0.4), #2f9e44) !important;
+}
+
+/* 🌹 Tone down teal glow around everything */
+body .flower * {
+    filter: none !important;
+}
+
+/* 🌹 FLOATING ROSE PETALS */
+.rose-petal {
+  position: fixed;
+  top: -10vh;
+  left: 50%;
+  width: 14px;
+  height: 18px;
+  background: radial-gradient(circle at 40% 40%, #ff88aa, #ff4d6d, #b3002d);
+  border-radius: 60% 40% 60% 40%;
+  opacity: 0.9;
+  pointer-events: none;
+  filter: blur(0.3px);
+  transform: rotate(0deg);
+  animation: petalFall linear forwards;
+}
+
+/* Falling animation */
+@keyframes petalFall {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(var(--petal-x)) translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ✨ DEW DROP SPARKLES */
+.dew-drop {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #ffffffaa, #ffffff33 70%, transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: dewFloat 3s ease-in-out infinite;
+  filter: blur(1px);
+}
+
+@keyframes dewFloat {
+  0% { transform: translateY(0) scale(1); opacity: 0.8; }
+  50% { transform: translateY(-6px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 0.8; }
+}
+
+/* 🌙 SOFT MOON GLOW */
+.moon {
+  position: fixed;
+  top: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, #ffffffdd, #ffffff22 60%, transparent 100%);
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0;
+  animation: moonFade 3s ease forwards;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes moonFade {
+  0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* 🕊️ BIRDS */
+.bird {
+  position: fixed;
+  top: 20vh;
+  width: 40px;
+  height: 20px;
+  background: url('data:image/svg+xml;utf8,<svg ... cute bird path .../>');
+  background-size: cover;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: birdFloat 6s ease-in-out infinite;
+}
+
+@keyframes birdFloat {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-16px) scale(1.05); }
+}
+
+/* 🎀 Pastel Vignette */
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center,
+     transparent 50%,
+     rgba(255, 170, 200, 0.2) 85%,
+     rgba(255, 130, 170, 0.28));
+  z-index: 0;
+  opacity: 0;
+  animation: vignetteFade 3s ease forwards;
+}
+
+@keyframes vignetteFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 💌 Ribbon Box */
+.ribbon-box {
+  position: fixed;
+  bottom: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 16px 34px;
+  background: #fff4fa;
+  color: #b30043;
+  font-weight: 700;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.3);
+  border: 2px solid #ffbcd4;
+  animation: ribbonPop 0.8s ease forwards;
+  opacity: 0;
+}
+
+@keyframes ribbonPop {
+  0% { transform: translateX(-50%) scale(0.6); opacity: 0; }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+/* -----------------------------
+   Soft moon glow
+   ----------------------------- */
+.moon {
+  position: fixed;
+  top: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, #fff8ee 0%, #ffd6e6 20%, rgba(255,0,90,0.04) 60%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(14px);
+  opacity: 0;
+  pointer-events: none;
+  animation: moonFade 1.2s ease forwards;
+  z-index: 2;
+}
+@keyframes moonFade {
+  from { opacity: 0; transform: translateX(-50%) translateY(-22px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* -----------------------------
+   Pastel vignette
+   ----------------------------- */
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center,
+     rgba(0,0,0,0) 45%,
+     rgba(255, 180, 210, 0.06) 70%,
+     rgba(255,120,180,0.08) 100%);
+  z-index: 0;
+  opacity: 0;
+  animation: vignetteFade 1.2s ease forwards;
+}
+@keyframes vignetteFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* -----------------------------
+   Bird sprite & animation
+   ----------------------------- */
+/* small SVG bird embedded as data URI for portability */
+.bird {
+  position: absolute;
+  top: 18vh;
+  width: 46px;
+  height: 28px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='46' height='28' viewBox='0 0 46 28'><path d='M2 18c6-10 18-10 26-2 6 6 10 10 18 6' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 5;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.45));
+  animation: birdFloat 6s ease-in-out infinite;
+}
+
+@keyframes birdFloat {
+  0% { transform: translateY(0) translateX(0) rotate(0deg) scale(1); opacity: 0; }
+  8% { opacity: 1; }
+  50% { transform: translateY(-18px) translateX(20vw) rotate(-6deg) scale(1.03); }
+  92% { opacity: 1; }
+  100% { transform: translateY(0) translateX(40vw) rotate(0deg) scale(1); opacity: 0; }
+}
+
+/* -----------------------------
+   Ribbon message box
+   ----------------------------- */
+.ribbon-box {
+  position: fixed;
+  bottom: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 28px;
+  background: linear-gradient(180deg,#fff7fb,#ffeef4);
+  color: #b30043;
+  font-weight: 800;
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+  border: 2px solid rgba(255, 186, 220, 0.6);
+  animation: ribbonPop 0.7s cubic-bezier(.2,.9,.2,1) forwards;
+  z-index: 99999;
+}
+@keyframes ribbonPop {
+  0% { transform: translateX(-50%) scale(0.7); opacity: 0; }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+/* -----------------------------
+   Floating petals (already added earlier) - ensure these exist
+   ----------------------------- */
+.rose-petal { pointer-events:none; z-index: 6; }
+
+/* -----------------------------
+   Dew drops (ensure above petal layer)
+   ----------------------------- */
+.dew-drop { z-index: 6; }
+
+/* -----------------------------
+   Make sure clones sit above grass but below UI
+   ----------------------------- */
+.rose-cluster { z-index: 12; transform-origin: bottom center; }
+
+/* Small responsive tweak so birds/vignette don't cover UI */
+@media (max-width:720px) {
+  .moon { width: 140px; height: 140px; top: 6vh; }
+  .bird { width: 36px; height: 20px; }
 }
 
 /*# sourceMappingURL=style.css.map */

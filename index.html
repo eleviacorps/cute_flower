@@ -5,9 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="main.js" type="text/javascript"></script><title>Flowers</title>
-</head>
     
+</head>
+
+
+
 <body class="not-loaded">
     <div class="night"></div>
     <div class="flowers">
@@ -306,5 +308,47 @@
         </div>
       </div>
     </div>
+
+
+
+    <!-- Message button + panel -->
+<button id="msgBtn" class="msg-btn" aria-label="Open message">
+  <!-- message icon (SVG) -->
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+      stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="color: aliceblue;"/>
+  </svg>
+</button>
+
+<div id="msgPanel" class="msg-panel" aria-hidden="true">
+  <div class="msg-panel__header">Message</div>
+  <div class="msg-panel__body">
+    <p>HOPE YOUR HEALTH GET BETTER AND BETTERR</p>
+  </div>
+</div>
+<div class="hello-box">
+  <span>HERE HAVE A FLOWER FOR YOU MS HAFSA</span>
+
+</div>
+  <div id="questionBox" class="question-box" style="z-index: 100;">
+  <p id="questionText" style="color: azure;">Do you think you're pretty?</p>
+
+  <div class="question-buttons" style="z-index: 200;">
+    <button id="yesBtn" class="q-btn yes">Yes</button>
+    <button id="noBtn" class="q-btn no">No</button>
+  </div>
+
+<div class="moon" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<!-- Birds container (JS will spawn inside this) -->
+<div id="birds-root" aria-hidden="true"></div>
+
+<!-- Ribbon message (hidden until shown) -->
+<div id="ribbonMsg" class="ribbon-box" style="display:none;">
+  You’re adorable and you know it ❤️
+</div>
+
+<script src="main.js"></script>
 </body>
 </html>
